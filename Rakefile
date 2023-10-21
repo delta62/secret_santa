@@ -5,7 +5,7 @@ require 'rspec/core/rake_task'
 task default: %i[spec]
 
 task :run do
-  ruby 'bin/secret_santa.rb'
+  ruby 'bin/secret_santa', 'res/people.csv'
 end
 
 RSpec::Core::RakeTask.new
