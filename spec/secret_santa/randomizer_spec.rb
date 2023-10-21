@@ -8,12 +8,12 @@ RSpec.describe SecretSanta::Randomizer do
   context 'initialize' do
     it 'raises when given a group larger than 1/2 the total pool of participants' do
       groups = make_groups(foo: 3, bar: 2)
-      expect { SecretSanta::Randomizer.new(groups: groups) }.to raise_error(SecretSanta::ImpossibleRansomization)
+      expect { SecretSanta::Randomizer.new(participants: groups) }.to raise_error(SecretSanta::ImpossibleRansomization)
     end
 
     it 'does not raise when given small groups' do
       groups = make_groups(foo: 2, bar: 2)
-      expect(SecretSanta::Randomizer.new(groups: groups)).to be_instance_of(SecretSanta::Randomizer)
+      expect(SecretSanta::Randomizer.new(participants: groups)).to be_instance_of(SecretSanta::Randomizer)
     end
   end
 
@@ -33,7 +33,7 @@ RSpec.describe SecretSanta::Randomizer do
     it 'self-assigns a single participant' do
       rand = randomizer_with_groups({ foo: 1 })
       result = rand.randomize
-      participant = SecretSanta::Participant.new(name: 'foo #0', email: '0@foo.com')
+      participant = SecretSanta::Participant.new(name: 'foo #0', email: '0@foo.com', group: 'foo')
       self_assignment = SecretSanta::Assignment.self_assignment(participant)
 
       expect(result.first).to eq(self_assignment)
@@ -48,17 +48,19 @@ RSpec.describe SecretSanta::Randomizer do
 
   def randomizer_with_groups(groups)
     groups = make_groups(groups)
-    SecretSanta::Randomizer.new(groups: groups)
+    SecretSanta::Randomizer.new(participants: groups)
   end
 
   def make_groups(groups)
-    ret = {}
+    ret = []
 
-    groups.each do |key, count|
-      participants = count.times.map do |i|
-        SecretSanta::Participant.new(name: "#{key} ##{i}", email: "#{i}@#{key}.com")
+    groups.each do |group, count|
+      count.times.each do |i|
+        name = "#{group} ##{i}"
+        email = "#{i}@#{group}.com"
+        p = SecretSanta::Participant.new(name: name, email: email, group: group)
+        ret.push(p)
       end
-      ret[key] = participants
     end
 
     ret

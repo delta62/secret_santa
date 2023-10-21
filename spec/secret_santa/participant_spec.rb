@@ -13,6 +13,11 @@ RSpec.describe SecretSanta::Participant do
     expect(p.email).to be('foo@example.com')
   end
 
+  it 'returns the correct group' do
+    p = make_participant(group: 'foos')
+    expect(p.group).to be(:foos)
+  end
+
   context '==' do
     it 'returns true for an identical participant' do
       a1 = make_participant(name: 'a', email: 'a@example.com')
@@ -31,22 +36,29 @@ RSpec.describe SecretSanta::Participant do
     end
 
     it 'returns false when names differ' do
-      p1 = make_participant(name: 'Alice')
-      p2 = make_participant(name: 'Bob')
-      expect(p1).not_to eq(p2)
+      alice = make_participant(name: 'Alice')
+      bob = make_participant(name: 'Bob')
+      expect(alice).not_to eq(bob)
+    end
+
+    it 'returns false when groups differ' do
+      foo_user = make_participant(group: 'foo')
+      bar_user = make_participant(group: 'bar')
+      expect(foo_user).not_to eq(bar_user)
     end
 
     it 'returns false when emails differ' do
-      p1 = make_participant(email: 'alice@example.com')
-      p2 = make_participant(email: 'bob@example.com')
-      expect(p1).not_to eq(p2)
+      alice = make_participant(email: 'alice@example.com')
+      bob = make_participant(email: 'bob@example.com')
+      expect(alice).not_to eq(bob)
     end
   end
 
-  def make_participant(email: nil, name: nil)
+  def make_participant(email: nil, name: nil, group: nil)
     name ||= 'jdoe'
     email ||= 'jdoe@example.com'
+    group ||= 'users'
 
-    SecretSanta::Participant.new(email: email, name: name)
+    SecretSanta::Participant.new(email: email, name: name, group: group)
   end
 end
