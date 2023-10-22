@@ -6,7 +6,6 @@ require 'secret_santa/participant'
 module SecretSanta
   class CsvParser
     def initialize(csv_path:)
-      @anon_group_number = 1
       @csv = CSV.read(csv_path)
     end
 

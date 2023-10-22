@@ -7,13 +7,13 @@ require 'secret_santa/randomizer'
 RSpec.describe SecretSanta::Randomizer do
   context 'initialize' do
     it 'raises when given a group larger than 1/2 the total pool of participants' do
-      groups = make_groups(foo: 3, bar: 2)
-      expect { SecretSanta::Randomizer.new(participants: groups) }.to raise_error(SecretSanta::ImpossibleRansomization)
+      participants = make_groups(foo: 3, bar: 2)
+      expect { make_randomizer(participants: participants) }.to raise_error(SecretSanta::ImpossibleRansomization)
     end
 
     it 'does not raise when given small groups' do
-      groups = make_groups(foo: 2, bar: 2)
-      expect(SecretSanta::Randomizer.new(participants: groups)).to be_instance_of(SecretSanta::Randomizer)
+      participants = make_groups(foo: 2, bar: 2)
+      expect(make_randomizer(participants: participants)).to be_instance_of(SecretSanta::Randomizer)
     end
   end
 
@@ -64,5 +64,9 @@ RSpec.describe SecretSanta::Randomizer do
     end
 
     ret
+  end
+
+  def make_randomizer(participants:)
+    SecretSanta::Randomizer.new(participants: participants)
   end
 end

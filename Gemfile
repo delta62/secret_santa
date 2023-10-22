@@ -7,5 +7,6 @@ group :development do
   gem 'guard-rake', require: false
   gem 'guard-rspec', require: false
   gem 'rake'
+  gem 'rantly'
   gem 'rspec'
 end
