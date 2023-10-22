@@ -2,7 +2,6 @@
 
 require 'rantly'
 require 'rantly/rspec_extensions'
-require 'rantly/shrinks'
 require 'secret_santa/participant'
 require 'secret_santa/randomizer'
 
