@@ -5,13 +5,14 @@ require 'time'
 
 module SecretSanta
   class Email
-    attr_reader :from, :to
+    attr_reader :from, :to, :subject
 
     def initialize(from:, to:, subject:, text_content:, reply_to: nil)
       @headers = {}
       @from = from
       @to = to
       @text_content = text_content.strip
+      @subject = subject
 
       set_header(key: 'From', value: from)
       set_header(key: 'To', value: to)

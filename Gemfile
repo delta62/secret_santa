@@ -3,6 +3,7 @@
 source 'https://rubygems.org'
 
 gem 'dotenv'
+gem 'optimist'
 
 group :development do
   gem 'guard'

@@ -12,11 +12,13 @@ module SecretSanta
       @redact_recipients = redact_recipients
     end
 
-    def report_participants(participants:)
+    def report_participants(participants)
       name_width = max_name_length(participants: participants)
       groups = participants.group_by(&:group)
-      anon_group = groups.delete(nil)
+      anon_group = groups.delete(nil) || []
 
+      puts 'Generating assignments for the following groups and solo participants'
+      puts
       puts "== PARTICIPANTS ==\n\n"
 
       anon_group.each { |p| print_participant(participant: p, name_width: name_width) }
@@ -29,7 +31,7 @@ module SecretSanta
       puts unless anon_group.empty?
     end
 
-    def report_assignments(assignments:)
+    def report_assignments(assignments)
       assignments = assignments.sort_by { |a| a.participant.name } if @sort
 
       first_col_width = max_participant_width(assignments: assignments)
