@@ -18,6 +18,16 @@ RSpec.describe SecretSanta::Participant do
     expect(p.group).to be(:foos)
   end
 
+  it 'returns the correct address1' do
+    p = make_participant(address1: '555 not real avenue')
+    expect(p.address1).to be('555 not real avenue')
+  end
+
+  it 'returns the correct address2' do
+    p = make_participant(address2: 'Salem, OR  97309')
+    expect(p.address2).to be('Salem, OR  97309')
+  end
+
   context '==' do
     it 'returns true for an identical participant' do
       a1 = make_participant(name: 'a', email: 'a@example.com')
@@ -52,13 +62,27 @@ RSpec.describe SecretSanta::Participant do
       bob = make_participant(email: 'bob@example.com')
       expect(alice).not_to eq(bob)
     end
+
+    it 'returns false when address1 differs' do
+      alice = make_participant(address1: '987 fake st')
+      bob = make_participant(address1: '789 fake st')
+      expect(alice).not_to eq(bob)
+    end
+
+    it 'returns false when address2 differs' do
+      alice = make_participant(address2: 'Nashville, TN  37215')
+      bob = make_participant(address2: 'Nashville, TN  37204')
+      expect(alice).not_to eq(bob)
+    end
   end
 
-  def make_participant(email: nil, name: nil, group: nil)
+  def make_participant(email: nil, name: nil, group: nil, address1: nil, address2: nil)
     name ||= 'jdoe'
     email ||= 'jdoe@example.com'
     group ||= 'users'
+    address1 ||= '123 fake st'
+    address2 ||= 'Tulsa, OK  74110'
 
-    SecretSanta::Participant.new(email: email, name: name, group: group)
+    SecretSanta::Participant.new(email: email, name: name, group: group, address1: address1, address2: address2)
   end
 end

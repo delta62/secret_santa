@@ -2,6 +2,8 @@
 
 source 'https://rubygems.org'
 
+gem 'dotenv'
+
 group :development do
   gem 'guard'
   gem 'guard-rake', require: false

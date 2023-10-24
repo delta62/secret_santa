@@ -17,7 +17,7 @@ def make_random_participants
       name = "group#{i}_user#{j}"
       email = "#{name}@example.com"
       group = group_size == 1 ? nil : "group#{i}"
-      p = SecretSanta::Participant.new(name: name, email: email, group: group)
+      p = SecretSanta::Participant.new(name: name, email: email, address1: 'addr1', address2: 'addr2', group: group)
       participants.push(p)
     end
   end
@@ -29,7 +29,7 @@ def make_random_participants
     padding_participant_count.times do |i|
       name = "padding_user_#{i}"
       email = "#{name}@example.com"
-      p = SecretSanta::Participant.new(name: name, email: email)
+      p = SecretSanta::Participant.new(name: name, email: email, address1: 'addr1', address2: 'addr2')
       participants.push(p)
       participant_count += 1
     end

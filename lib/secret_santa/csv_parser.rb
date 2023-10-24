@@ -16,8 +16,8 @@ module SecretSanta
     # and an optional group name.
     def parse
       @csv.map do |row|
-        name, email, group = row
-        Participant.new(name: name, email: email, group: group)
+        name, email, address1, address2, group = row
+        Participant.new(name: name, email: email, address1: address1, address2: address2, group: group)
       end
     end
   end
