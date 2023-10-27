@@ -9,6 +9,11 @@ module SecretSanta
       expect(address.email).to eq('bob@example.com')
     end
 
+    it 'returns the given email address' do
+      address = EmailAddress.new(name: 'bob', email: 'bob@example.com')
+      expect(address.name).to eq('bob')
+    end
+
     context 'domain' do
       it 'returns the domain part' do
         address = EmailAddress.new(name: 'bob', email: 'bob@example.com')

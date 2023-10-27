@@ -10,6 +10,7 @@ module SecretSanta
       # order of assignments would show who is giving to who.
       @sort = redact_recipients
       @redact_recipients = redact_recipients
+      @log_file = File.open('log/run.log', mode: 'w')
     end
 
     def report_participants(participants)
@@ -40,12 +41,18 @@ module SecretSanta
 
       assignments.each do |assignment|
         from = assignment.participant.name.ljust(first_col_width)
-        to = @redact_recipients ? '*******' : assignment.gives_to.name
-        puts "#{from} -> #{to}"
+        puts("#{from} -> ", newline: false)
+        puts(assignment.gives_to.name, redact: @redact_recipients)
       end
     end
 
     private
+
+    def puts(val = '', redact: false, newline: true)
+      newline = newline ? "\n" : ''
+      $stdout.write(redact ? "********#{newline}" : "#{val}#{newline}")
+      @log_file.write("#{val}#{newline}")
+    end
 
     def print_group(group_name:, members:, name_width:)
       puts "#{group_name}:"

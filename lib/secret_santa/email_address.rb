@@ -2,7 +2,7 @@
 
 module SecretSanta
   class EmailAddress
-    attr_reader :email
+    attr_reader :email, :name
 
     def initialize(name:, email:)
       @name = name.strip

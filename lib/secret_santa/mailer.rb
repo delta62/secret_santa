@@ -10,12 +10,12 @@ module SecretSanta
       @smtp_username = smtp_username
       @smtp_password = smtp_password
       @authtype = authtype
+      @smtp = Net::SMTP.new(@smtp_host, @smtp_port)
+      @sent_count = 0
     end
 
     def send(email:)
-      Net::SMTP.start(
-        @smtp_host,
-        @smtp_port,
+      @smtp.start(
         helo: email.from.domain,
         user: @smtp_username,
         secret: @smtp_password,

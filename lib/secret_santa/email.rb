@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
-require 'securerandom'
 require 'time'
 
 module SecretSanta
   class Email
     attr_reader :from, :to, :subject
 
-    def initialize(from:, to:, subject:, text_content:, reply_to: nil)
+    def initialize(from:, to:, subject:, text_content:)
       @headers = {}
       @from = from
       @to = to
@@ -17,9 +16,7 @@ module SecretSanta
       set_header(key: 'From', value: from)
       set_header(key: 'To', value: to)
       set_header(key: 'Subject', value: subject)
-      set_header(key: 'Reply-To', value: reply_to) if reply_to
       set_header(key: 'Date', value: generate_date)
-      set_header(key: 'Message-ID', value: generate_message_id)
     end
 
     def to_s
@@ -38,10 +35,6 @@ module SecretSanta
 
     def format_headers
       @headers.map { |key, value| "#{key}: #{value}" }.join("\n")
-    end
-
-    def generate_message_id
-      "<#{SecureRandom.uuid}@#{@from.domain}>"
     end
 
     def generate_date

@@ -3,7 +3,8 @@
 module SecretSanta
   class StubMailer
     def send(email:)
-      puts "Send '#{email.subject}' from #{email.from} to #{email.to}"
+      puts "Sending '#{email.subject}'"
+      puts "#{email.from} -> #{email.to}"
     end
   end
 end
