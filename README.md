@@ -43,8 +43,8 @@ required.
 This program reads recipients from a CSV file. The file should not contain a
 header row; the first row in the CSV is parsed as a participant.
 
-## | Column | Contents | Required? |
-
+| Column | Contents | Required? |
+| ------ | ---------| --------- |
 | 1 | Participant name | yes |
 | 2 | Participant email | yes |
 | 3 | Participant address, line 1 | yes |
@@ -60,8 +60,8 @@ to a given participant. Template variables are surrounded by braces, such as
 `{{name}}`. The following variables are templated in, with values provided in
 the CSV:
 
-## | Variable | Value |
-
+| Variable | Value |
+| --------- | ----- |
 | `{{name}}` | Name of the recipient assigned to this participant |
 | `{{address1}}` | First address line of the recipient |
 | `{{address2}}` | Second address line of the recipient |
